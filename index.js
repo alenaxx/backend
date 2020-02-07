@@ -8,14 +8,14 @@ const cors = require('cors');
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = 3306;
+const port = 3001;
 
 String.prototype.alphaNumeric = function() {
     return this.replace(/[^a-z0-9A-ZА-Яа-я\-\ ]/gi,'');
 };
 
 const conn = mysql.createPool({
-    host:  'localhost',
+    host:  'onther6h.beget.tech',
     user: 'onther6h_weblab',
     database: 'onther6h_weblab',
     password: '123456'
@@ -60,7 +60,7 @@ app.post('/favourites', (req, res) => {
 
 app.delete('/favourites', (req, res) => {
     console.log();
-    conn.execute('delete from `favoriteCities` WHERE `NAME` = ?', [req.body.city.alphaNumeric()])
+    conn.execute('delete from `favoriteCities` WHERE (`NAME`) = (?)', [req.body.city.alphaNumeric()])
         .then(() => res.send("200 OK DELETED"))
         .catch((e) => res.status(500).send({"error":e}))
 });
